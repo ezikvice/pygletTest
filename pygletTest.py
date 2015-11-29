@@ -8,13 +8,13 @@ __author__ = 'Dmitry'
 # shape = (9, 9)
 # arr = np.ones((9, 9))
 arr = np.array([[2, 2, 2, 2, 2, 2, 2, 2, 2],
-               [2, 0, 0, 0, 0, 0, 0, 0, 2],
-               [2, 0, 0, 0, 0, 0, 0, 0, 2],
-               [2, 0, 0, 0, 0, 0, 0, 0, 2],
-               [2, 0, 0, 0, 0, 0, 0, 0, 2],
-               [2, 0, 0, 0, 0, 0, 0, 0, 2],
-               [2, 0, 0, 0, 0, 0, 0, 0, 2],
-               [2, 1, 0, 0, 0, 0, 0, 0, 2],
+               [2, 3, 3, 3, 3, 3, 3, 3, 2],
+               [2, 3, 0, 0, 0, 0, 0, 3, 2],
+               [2, 3, 0, 0, 0, 0, 0, 3, 2],
+               [2, 3, 0, 0, 0, 0, 0, 3, 2],
+               [2, 3, 0, 0, 1, 0, 0, 3, 2],
+               [2, 3, 0, 0, 0, 0, 0, 3, 2],
+               [2, 3, 3, 3, 3, 3, 3, 3, 2],
                [2, 2, 2, 2, 2, 2, 2, 2, 2]])
 
 pyglet.resource.path = ["res"]
@@ -24,6 +24,7 @@ pyglet.resource.reindex()
 # player = pyglet.sprite.Sprite(res.player, x=50, y=50)
 
 batch = pyglet.graphics.Batch()
+trees = []
 bricks = []
 cell = 64
 winwidth = cell*10
@@ -33,6 +34,8 @@ for i in range(len(arr)):
     for k in range(len(arr[i])):
         x, y = (k % arrsize) * cell, i * 64
         if arr[i, k] == 2:
+            trees.append(pyglet.sprite.Sprite(res.grass, x, winwidth - cell - y, batch=batch))
+        if arr[i, k] == 3:
             bricks.append(pyglet.sprite.Sprite(res.brick, x, winwidth - cell - y, batch=batch))
         elif arr[i, k] == 1:
             player = pyglet.sprite.Sprite(res.player, x, winheight - cell - y)

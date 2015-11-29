@@ -1,8 +1,11 @@
-import pyglet
+import pyglet.resource as res
 
-pyglet.resource.path = ["res"]
-pyglet.resource.reindex()
+res.path = ["res"]
+res.reindex()
 
-brick = pyglet.resource.image("bricksx64.png")
-player = pyglet.resource.image("gecko.png")
+brick = res.image("bricksx64.png")
+# brick = res.image("brick-wall.png")
+tree = res.image("beech.png")
+grass = res.image("wheat.png")
+player = res.image("gecko.png")
 
