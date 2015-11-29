@@ -7,5 +7,6 @@ brick = res.image("bricksx64.png")
 # brick = res.image("brick-wall.png")
 tree = res.image("beech.png")
 grass = res.image("wheat.png")
+box = res.image("wooden-crate.png")
 player = res.image("gecko.png")
 
