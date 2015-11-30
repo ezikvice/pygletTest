@@ -5,13 +5,11 @@ from GameMetric import *
 __author__ = 'Dmitry'
 
 
-class Brick(sprite.Sprite):
+class Box(sprite.Sprite):
 
-    id = 3
+    id = 4
 
     def __init__(self, row, column, batch):
-        super(Brick, self).__init__(res.brick, x=row*CELL_SIZE, y=(column+1)*CELL_SIZE, batch=batch)
+        super(Box, self).__init__(res.box, x=row*CELL_SIZE, y=(column+1)*CELL_SIZE, batch=batch)
         self.row = row
         self.column = column
-
-
