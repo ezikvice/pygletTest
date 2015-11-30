@@ -2,6 +2,7 @@ import pyglet
 from pyglet.window import key
 import resources as res
 import numpy as np
+import Brick
 
 __author__ = 'Dmitry'
 
@@ -38,7 +39,8 @@ for i in range(len(arr)):
         if arr[i, k] == 2:
             trees.append(pyglet.sprite.Sprite(res.grass, x, winwidth - cell - y, batch=batch))
         if arr[i, k] == 3:
-            bricks.append(pyglet.sprite.Sprite(res.brick, x, winwidth - cell - y, batch=batch))
+            # bricks.append(pyglet.sprite.Sprite(res.brick, x, winwidth - cell - y, batch=batch))
+            bricks.append(Brick.Brick(i, k, batch))
         if arr[i, k] == 4:
             boxes.append(pyglet.sprite.Sprite(res.box, x, winwidth - cell - y, batch=batch))
         elif arr[i, k] == 1:
@@ -78,7 +80,6 @@ def on_key_press(symbol, modifiers):
             player.set_position(player.x + cell, player.y)
 
 
-
 @window.event
 def on_draw():
     window.clear()
@@ -86,6 +87,7 @@ def on_draw():
     batch.draw()
     player.draw()
     fps_display.draw()
+
 
 def update(dt):
     pass
