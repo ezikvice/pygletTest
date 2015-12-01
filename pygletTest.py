@@ -40,47 +40,48 @@ for i in range(len(arr)):
     for k in range(len(arr[i])):
         y, x = (i % arrsize) * cell, k * 64
         if arr[i, k] == 2:
-            trees.append(pyglet.sprite.Sprite(res.grass, x, y + cell, batch=batch))
+            trees.append(pyglet.sprite.Sprite(res.grass, x, y, batch=batch))
         if arr[i, k] == 3:
             # bricks.append(pyglet.sprite.Sprite(res.brick, x, winwidth - cell - y, batch=batch))
             bricks.append(Brick.Brick(i, k, batch))
         if arr[i, k] == 4:
             boxes.append(Box.Box(i, k, batch))
         elif arr[i, k] == 1:
-            player = pyglet.sprite.Sprite(res.player, x, y + cell)
+            player = pyglet.sprite.Sprite(res.player, x, y)
 
 
 window = pyglet.window.Window(width=(cell*10), height=(cell*10))
 fps_display = pyglet.window.FPSDisplay(window)
+fps_display.label.y = 600
 
 label = pyglet.text.Label('Hello, world',
                           font_name='Times New Roman',
                           font_size=36,
-                          x=100, y=36,
-                          anchor_x='left', anchor_y='center')
+                          x=600, y=600,
+                          anchor_x='right', anchor_y='baseline')
 
 
 
 @window.event
 def on_key_press(symbol, modifiers):
-    r = player.y // cell - 1
+    r = player.y // cell
     c = player.x // cell
     if symbol == key.UP:
         # if arr[r][c+1] != 3: #TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
-            label.text = '[{0}, {1}]'.format(c+1, r)
             player.set_position(player.x, player.y + cell)
+            label.text = '[x={0}, y={1}]'.format(c, r+1)
     if symbol == key.DOWN:
         # if arr[r][c-1] != 3: #TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
-            label.text = '[{0}, {1}]'.format(c-1, r)
             player.set_position(player.x, player.y - cell)
+            label.text = '[x={0}, y={1}]'.format(c, r-1)
     if symbol == key.LEFT:
         # if arr[r-1][c] != 3: #TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
-            label.text = '[{0}, {1}]'.format(c, r-1)
             player.set_position(player.x - cell, player.y)
+            label.text = '[x={0}, y={1}]'.format(c-1, r)
     if symbol == key.RIGHT:
         # if arr[r+1][c] != 3: #TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
-            label.text = '[{0}, {1}]'.format(c, r+1)
             player.set_position(player.x + cell, player.y)
+            label.text = '[x={0}, y={1}]'.format(c+1, r)
 
 
 @window.event
