@@ -9,9 +9,9 @@ class Brick(sprite.Sprite):
 
     id = 3
 
-    def __init__(self, row, column, batch):
-        super(Brick, self).__init__(res.brick, x=row*CELL_SIZE, y=column*CELL_SIZE, batch=batch)
-        self.row = row
+    def __init__(self, column, row, batch):
+        super(Brick, self).__init__(res.brick, x=column*CELL_SIZE, y=WIN_HEIGHT - row*CELL_SIZE, batch=batch)
         self.column = column
+        self.row = row
 
 
