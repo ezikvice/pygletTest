@@ -3,7 +3,6 @@ from pyglet.window import key
 import resources as res
 import numpy as np
 import GameObjects
-import Brick
 from GameMetric import *
 
 
@@ -46,7 +45,7 @@ for i in range(len(arr)):
             trees.append(pyglet.sprite.Sprite(res.grass, x, WIN_HEIGHT - y, batch=batch))
         if arr[i, k] == 3:
             # bricks.append(pyglet.sprite.Sprite(res.brick, x, winwidth - cell - y, batch=batch))
-            bricks.append(Brick.Brick(i, k, batch))
+            bricks.append(GameObjects.Brick(i, k, batch))
         if arr[i, k] == 4:
             boxes.append(GameObjects.Box(i, k, batch))
         elif arr[i, k] == 1:

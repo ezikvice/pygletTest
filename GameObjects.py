@@ -30,3 +30,10 @@ class Player(GameObject):
     def __init__(self, column, row, batch):
         super(Player, self).__init__(res.player, 1, column, row, batch)
 
+
+class Brick(GameObject):
+
+    def __init__(self, column, row, batch):
+        super(Brick, self).__init__(res.brick, 3, column, row, batch)
+
+
