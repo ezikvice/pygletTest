@@ -1,30 +1,31 @@
-import numpy as n
+import pyglet
+from pyglet.window import key
+import resources as res
+from pyglet import clock
+
+__author__ = 'Dmitry'
+
+pyglet.resource.path = ["res"]
+pyglet.resource.reindex()
+
+tree = pyglet.sprite.Sprite(res.player, 110, 110)
+# tree_down = pyglet.sprite.Sprite()
+
+window = pyglet.window.Window(width=640, height=640, caption="Gecko Soko")
 
 
-class Obj:
-    row = 0
-    column = 2
+def update(dt):
+    tree.image = res.player_down
+    # tree.rotation += 100*dt
 
 
-arr = [[1, 2, 0], [1, 1, 1]]
-direction = [0, -1]
-obj = Obj()
+clock.schedule(update)
 
 
-def can_move():
-    next_cell = n.add([obj.row, obj.column], direction)
-    next_cell.tolist()
-    r, c = next_cell
-    if arr[r][c] == 3:
-        return False
-    else:
-        next_cell = n.add(next_cell, direction)
-        next_cell.tolist()
-        r, c = next_cell
-        if arr[r][c] == 2 or arr[r][c] == 3:
-            return False
-    return True
+@window.event
+def on_draw():
+    window.clear()
+    tree.draw()
 
 
-a = can_move()
-print(a)
+pyglet.app.run()

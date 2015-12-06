@@ -36,6 +36,8 @@ box_targets = []
 current_cell = 0, 0
 
 player = GameObjects.Player(None, current_cell)
+# player.image.anchor_x = 0
+# player.image.anchor_y = 0
 
 arrsize = arr.size
 
@@ -91,8 +93,6 @@ def can_move(obj, direction):
             else:
                 box = get_obj_by_coords(boxes, old_r, old_c)
                 box.move(direction)
-                arr[old_r][old_c] -= 4
-                arr[r][c] += 4
     return True
 
 
@@ -106,22 +106,26 @@ def get_obj_by_coords(objects, r, c):
 def on_key_press(symbol, modifiers):
     if symbol == key.UP:  # координаты по y обращены для удобства
         direction = [-1, 0]
-        if can_move(player, direction):  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
+        if can_move(player, direction):
+            player.image = player.views['up']
             player.move(direction)
         show_coords()
     if symbol == key.DOWN:  # координаты по y обращены для удобства
         direction = [1, 0]
-        if can_move(player, direction):  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
+        if can_move(player, direction):
+            player.image = player.views['down']
             player.move(direction)
         show_coords()
     if symbol == key.LEFT:
         direction = [0, -1]
-        if can_move(player, direction):  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
+        if can_move(player, direction):
+            player.image = player.views['left']
             player.move(direction)
         show_coords()
     if symbol == key.RIGHT:
         direction = [0, 1]
-        if can_move(player, direction):  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
+        if can_move(player, direction):
+            player.image = player.views['right']
             player.move(direction)
         show_coords()
 

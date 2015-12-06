@@ -29,6 +29,13 @@ class Player(GameObject):
     def __init__(self, batch, arr):
         super(Player, self).__init__(res.player, 1, batch, arr)
 
+    views = {'up': res.player, 'down': res.player_down, 'left': res.player_left, 'right': res.player_right}
+
+    # TODO: научиться правильно поворачивать игрока (может, загружать в один большой спрайт и оттуда тягать по фреймам)
+    for key in views:
+        views[key].anchor_x = 0
+        views[key].anchor_y = 0
+
 
 class Tree(GameObject):
     def __init__(self, batch, arr):
