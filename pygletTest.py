@@ -20,8 +20,8 @@ arr = np.array([[2, 2, 2, 2, 2, 2, 2, 2, 2],
                [2, 3, 0, 0, 0, 0, 0, 3, 2],
                [2, 3, 0, 4, 0, 0, 0, 3, 2],
                [2, 3, 0, 0, 0, 0, 0, 3, 2],
-               [2, 3, 3, 3, 3, 3, 3, 3, 2],
-               [2, 2, 2, 2, 2, 2, 2, 2, 2]])
+               [2, 2, 3, 3, 3, 3, 3, 2, 2],
+               [0, 2, 2, 2, 2, 2, 2, 2, 0]])
 
 pyglet.resource.path = ["res"]
 pyglet.resource.reindex()
@@ -34,26 +34,24 @@ batch = pyglet.graphics.Batch()
 trees = []  # TODO: сделать словарик с ресурсами (номер-имя), или лучше спрайты сделать объектами и в них хранить также номер
 bricks = []
 boxes = []
-cell = 64
-winwidth = cell*10
-winheight = cell*10
+current_cell = [0, 0]
+winwidth = CELL_SIZE*10
+winheight = CELL_SIZE*10
 arrsize = arr.size
-for i in range(len(arr)):
-    for k in range(len(arr[i])):
-        y, x = (i % arrsize) * cell, k * 64
-        if arr[i, k] == 2:
-            trees.append(pyglet.sprite.Sprite(res.grass, x, WIN_HEIGHT - y, batch=batch))
-        if arr[i, k] == 3:
-            # bricks.append(pyglet.sprite.Sprite(res.brick, x, winwidth - cell - y, batch=batch))
-            bricks.append(GameObjects.Brick(i, k, batch))
-        if arr[i, k] == 4:
-            boxes.append(GameObjects.Box(i, k, batch))
-        elif arr[i, k] == 1:
-            player = GameObjects.Player(i, k, None)
-            # player.move(i, k)
+for row in range(len(arr)):
+    for column in range(len(arr[row])):
+        current_cell = arr[row][column]
+        if current_cell == 2:
+            trees.append(GameObjects.Tree(row, column, batch))
+        if arr[row, column] == 3:
+            bricks.append(GameObjects.Brick(row, column, batch))
+        if arr[row, column] == 4:
+            boxes.append(GameObjects.Box(row, column, batch))
+        elif arr[row, column] == 1:
+            player = GameObjects.Player(row, column, None)
 
 
-window = pyglet.window.Window(width=(cell*10), height=(cell*10), caption="Gecko Soko")
+window = pyglet.window.Window(width=(CELL_SIZE*10), height=(CELL_SIZE*10), caption="Gecko Soko")
 fps_display = pyglet.window.FPSDisplay(window)
 fps_display.label.y = 0
 
