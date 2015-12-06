@@ -1,3 +1,5 @@
+import numpy as n
+
 __author__ = 'Dmitry'
 
 #
@@ -17,7 +19,7 @@ def move(obj, column, row):
     obj.row = row
 
 
-def can_move(arr, column, row):
+def has_brick(arr, column, row):
     if 3 == arr[column][row]:
-        return False
-    return True
+        return True
+    return False

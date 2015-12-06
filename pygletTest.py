@@ -1,6 +1,5 @@
 import pyglet
 from pyglet.window import key
-import resources as res
 import numpy as np
 import GameObjects
 from GameMetric import *
@@ -9,13 +8,11 @@ __author__ = 'Dmitry'
 
 # TODO: сделать нормальный расчет координат. сейчас неправильно считаются
 
-# shape = (9, 9)
-# arr = np.ones((9, 9))
 # TODO: загружать поле из файла
 arr = np.array([[3, 3, 3, 3, 3, 3, 3, 3, 2],
                 [3, 0, 0, 0, 0, 0, 0, 3, 2],
                 [3, 0, 1, 0, 0, 0, 0, 3, 2],
-                [3, 0, 0, 0, 0, 10, 0, 3, 2],
+                [3, 0, 4, 0, 0, 10, 0, 3, 2],
                 [3, 0, 0, 0, 0, 0, 0, 3, 2],
                 [3, 0, 0, 14, 0, 0, 0, 3, 2],
                 [3, 0, 0, 0, 0, 0, 0, 3, 2],
@@ -31,7 +28,7 @@ pyglet.resource.reindex()
 batch = pyglet.graphics.Batch()
 layer2 = pyglet.graphics.Batch()
 
-trees = []  # TODO: сделать словарик с ресурсами (номер-имя), или лучше спрайты сделать объектами и в них хранить также номер
+trees = []
 bricks = []
 boxes = []
 box_targets = []
@@ -57,7 +54,7 @@ for row in range(len(arr)):
             boxes.append(GameObjects.Box(batch, current_cell))
         elif arr[current_cell] == 1:
             # player = GameObjects.Player(row, column, None)
-            player.move(current_cell)
+            player.move(current_cell)  # работает только потому, что изначально у игрока позиция 0,0
 
 window = pyglet.window.Window(width=(CELL_SIZE * 10), height=(CELL_SIZE * 10), caption="Gecko Soko")
 fps_display = pyglet.window.FPSDisplay(window)
@@ -74,30 +71,59 @@ def show_coords():
     label.text = '[{0}, {1}]'.format(player.row, player.column)
 
 
+def can_move(obj, direction):
+    # проверяем не кирпич ли это
+    next_cell = n.add([obj.row, obj.column], direction)
+    next_cell.tolist()
+    r, c = next_cell
+    if get_obj_by_coords(bricks, r, c):
+        return False
+    else:
+        # проверяем, если это ящик, то что за ним
+        old_r = r
+        old_c = c
+        if get_obj_by_coords(boxes, r, c):
+            next_cell = n.add(next_cell, direction)
+            next_cell.tolist()
+            r, c = next_cell
+            if get_obj_by_coords(boxes, r, c) or get_obj_by_coords(bricks, r, c):
+                return False
+            else:
+                box = get_obj_by_coords(boxes, old_r, old_c)
+                box.move(direction)
+                arr[old_r][old_c] -= 4
+                arr[r][c] += 4
+    return True
+
+
+def get_obj_by_coords(objects, r, c):
+    for obj in objects:
+        if obj.row == r and obj.column == c:
+            return obj
+
+
 @window.event
 def on_key_press(symbol, modifiers):
-    c = player.column
-    r = player.row
     if symbol == key.UP:  # координаты по y обращены для удобства
-        next_pos = [player.row - 1, player.column]
-        if arr[r - 1][c] != 3:  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
-            player.move(next_pos)
-            show_coords()
+        direction = [-1, 0]
+        if can_move(player, direction):  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
+            player.move(direction)
+        show_coords()
     if symbol == key.DOWN:  # координаты по y обращены для удобства
-        next_pos = [player.row + 1, player.column]
-        if arr[r + 1][c] != 3:  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
-            player.move(next_pos)
-            show_coords()
+        direction = [1, 0]
+        if can_move(player, direction):  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
+            player.move(direction)
+        show_coords()
     if symbol == key.LEFT:
-        next_pos = [player.row, player.column - 1]
-        if arr[r][c - 1] != 3:  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
-            player.move(next_pos)
-            show_coords()
+        direction = [0, -1]
+        if can_move(player, direction):  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
+            player.move(direction)
+        show_coords()
     if symbol == key.RIGHT:
-        next_pos = [player.row, player.column + 1]
-        if arr[r][c + 1] != 3:  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
-            player.move(next_pos)
-            show_coords()
+        direction = [0, 1]
+        if can_move(player, direction):  # TODO: сделать проверку возможности хода (кирпич, ящик, а за ним что-нибудь)
+            player.move(direction)
+        show_coords()
 
 
 @window.event

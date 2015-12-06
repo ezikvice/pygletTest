@@ -5,6 +5,9 @@ from GameMetric import *
 __author__ = 'Dmitry'
 
 
+# TODO: разобраться с row, column. возможно, лучше сразу хранить в тупле rc например
+
+
 class GameObject(sprite.Sprite):
     def __init__(self, img, obj_id, batch, arr):
         row, column = arr
@@ -13,8 +16,10 @@ class GameObject(sprite.Sprite):
         self.row = row
         self.obj_id = obj_id
 
-    def move(self, arr):
-        row, column = arr
+    def move(self, direction):
+        next_cell = n.add([self.row, self.column], direction)
+        next_cell.tolist()
+        row, column = next_cell
         self.column = column
         self.row = row
         self.set_position(column * CELL_SIZE, WIN_HEIGHT - row * CELL_SIZE)

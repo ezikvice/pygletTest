@@ -1,19 +1,30 @@
-import pyglet
-from pyglet.window import key
-import resources as res
+import numpy as n
 
-__author__ = 'Dmitry'
 
-pyglet.resource.path = ["res"]
-pyglet.resource.reindex()
+class Obj:
+    row = 0
+    column = 2
 
-tree = pyglet.sprite.Sprite(res.grass, 0, 0)
 
-window = pyglet.window.Window(width=640, height=640, caption="Gecko Soko")
+arr = [[1, 2, 0], [1, 1, 1]]
+direction = [0, -1]
+obj = Obj()
 
-@window.event
-def on_draw():
-    window.clear()
-    tree.draw()
 
-pyglet.app.run()
+def can_move():
+    next_cell = n.add([obj.row, obj.column], direction)
+    next_cell.tolist()
+    r, c = next_cell
+    if arr[r][c] == 3:
+        return False
+    else:
+        next_cell = n.add(next_cell, direction)
+        next_cell.tolist()
+        r, c = next_cell
+        if arr[r][c] == 2 or arr[r][c] == 3:
+            return False
+    return True
+
+
+a = can_move()
+print(a)
