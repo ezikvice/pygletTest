@@ -1,6 +1,11 @@
-import pyglet.resource as res
+import pyglet
 
-res.path = ["res"]
+pyglet.options['audio'] = ('directsound', 'silent')
+
+import pyglet.resource as res
+import pyglet.media as md
+
+res.path = ["res", "res/sound"]
 res.reindex()
 
 brick = res.image("bricks3.png")
@@ -12,4 +17,6 @@ player = res.image("gecko4.png")
 player_down = res.image("gecko4.png", rotate=180)
 player_left = res.image("gecko4.png", rotate=270)
 player_right = res.image("gecko4.png", rotate=90)
-target = res.image("boxtarget.png")
+target = res.image("boxtarget_2.png")
+
+backmusic = res.media("backmusic.mp3", streaming=False)

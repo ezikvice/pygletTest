@@ -1,4 +1,6 @@
+import pyglet
 import pyglet.sprite as sprite
+import pyglet.media as media
 import resources as res
 from GameMetric import *
 
@@ -28,6 +30,12 @@ class GameObject(sprite.Sprite):
 class Player(GameObject):
     def __init__(self, batch, arr):
         super(Player, self).__init__(res.player, 1, batch, arr)
+
+        music = media.Player()
+        source = res.backmusic
+        music.queue(source)
+        music.volume = 0.3
+        music.play()
 
     views = {'up': res.player, 'down': res.player_down, 'left': res.player_left, 'right': res.player_right}
 
