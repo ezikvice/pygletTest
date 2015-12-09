@@ -31,12 +31,12 @@ class Player(GameObject):
     def __init__(self, batch, arr):
         super(Player, self).__init__(res.player, 1, batch, arr)
 
-        music = media.Player()
         source = res.backmusic
-        music.queue(source)
-        music.volume = 0.3
-        music.play()
+        self.music.queue(source)
+        self.music.volume = 0.3
+        self.music.play()
 
+    music = music = media.Player()
     views = {'up': res.player, 'down': res.player_down, 'left': res.player_left, 'right': res.player_right}
 
     # TODO: научиться правильно поворачивать игрока (может, загружать в один большой спрайт и оттуда тягать по фреймам)

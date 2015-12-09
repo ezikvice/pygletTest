@@ -128,6 +128,10 @@ def on_key_press(symbol, modifiers):
             player.image = player.views['right']
             player.move(direction)
         show_coords()
+    if symbol == key.M:
+        player.music.pause()
+    if symbol == key.P:
+        player.music.play()
 
 
 @window.event
