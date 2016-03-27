@@ -36,7 +36,7 @@ class Player(GameObject):
         self.music.volume = 0.3
         self.music.play()
 
-    music = music = media.Player()
+    music = media.Player()
     views = {'up': res.player, 'down': res.player_down, 'left': res.player_left, 'right': res.player_right}
 
     # TODO: научиться правильно поворачивать игрока (может, загружать в один большой спрайт и оттуда тягать по фреймам)
