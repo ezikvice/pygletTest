@@ -2,6 +2,7 @@ import pyglet
 from pyglet.window import key
 import numpy as np
 import GameObjects
+import configparser
 from GameMetric import *
 
 __author__ = 'Dmitry'
@@ -9,6 +10,7 @@ __author__ = 'Dmitry'
 # TODO: сделать нормальный расчет координат. сейчас неправильно считаются
 
 # TODO: загружать поле из файла
+# TODO: сделать загрузку из нескольких массивов на каждый объект свой массив
 arr = np.array([[3, 3, 3, 3, 3, 3, 3, 3, 2],
                 [3, 0, 0, 0, 0, 0, 0, 3, 2],
                 [3, 0, 1, 0, 0, 0, 0, 3, 2],
