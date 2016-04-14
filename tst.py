@@ -49,15 +49,18 @@ cfgfile = open("test.ini", 'w')
 
 cfg = configparser.ConfigParser()
 # add the settings to the structure of the file, and lets write it out...
-cfg.add_section('trees')
-cfg.set('trees', trees)
-cfg.add_section('bricks')
-cfg.set('bricks', bricks)
-cfg.add_section('boxes')
-cfg.set('boxes', boxes)
-cfg.add_section('box_targets')
-cfg.set('box_targets', box_targets)
+cfg.add_section('GameObjects')
+cfg.set('GameObjects', 'trees', ', '.join(str(x) for x in trees))
+cfg.set('GameObjects', 'bricks', ', '.join(str(x) for x in bricks))
+cfg.set('GameObjects', 'boxes', ', '.join(str(x) for x in boxes))
+cfg.set('GameObjects', 'box_targets', ', '.join(str(x) for x in box_targets))
+cfg.write(cfgfile)
 cfgfile.close()
+
+
+opencfg = configparser.ConfigParser()
+opencfg.read("test.ini")
+opencfg.options()
 
 window = pyglet.window.Window(width=640, height=640, caption="Gecko Soko")
 
