@@ -26,6 +26,9 @@ class GameObject(sprite.Sprite):
         self.row = row
         self.set_position(column * CELL_SIZE, WIN_HEIGHT - row * CELL_SIZE)
 
+    def get_position(self):
+        return str(self.column),  str(self.row)
+
 
 class Player(GameObject):
     def __init__(self, batch, arr):

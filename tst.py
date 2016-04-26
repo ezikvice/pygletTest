@@ -44,23 +44,27 @@ for row in range(len(arr)):
         if cur_cell_val == 4:
             boxes.append(current_cell)
 
-# lets create that config file for next time...
-cfgfile = open("test.ini", 'w')
 
-cfg = configparser.ConfigParser()
-# add the settings to the structure of the file, and lets write it out...
-cfg.add_section('GameObjects')
-cfg.set('GameObjects', 'trees', ', '.join(str(x) for x in trees))
-cfg.set('GameObjects', 'bricks', ', '.join(str(x) for x in bricks))
-cfg.set('GameObjects', 'boxes', ', '.join(str(x) for x in boxes))
-cfg.set('GameObjects', 'box_targets', ', '.join(str(x) for x in box_targets))
-cfg.write(cfgfile)
-cfgfile.close()
+def save_file(filename):
+    # lets create that config file for next time...
+    cfgfile = open(filename, 'w')
 
+    cfg = configparser.ConfigParser()
+    # add the settings to the structure of the file, and lets write it out...
+    cfg.add_section('GameObjects')
+    cfg.set('GameObjects', 'trees', ', '.join(str(x) for x in trees))
+    cfg.set('GameObjects', 'bricks', ', '.join(str(x) for x in bricks))
+    cfg.set('GameObjects', 'boxes', ', '.join(str(x) for x in boxes))
+    cfg.set('GameObjects', 'box_targets', ', '.join(str(x) for x in box_targets))
+    cfg.write(cfgfile)
+    cfgfile.close()
+
+save_file("test.ini")
 
 opencfg = configparser.ConfigParser()
-opencfg.read("test.ini")
-opencfg.options()
+opencfg.read("levels/1.ini")
+print(opencfg.get("GameObjects", 'trees'))
+print(opencfg.get("GameObjects", 'bricks'))
 
 window = pyglet.window.Window(width=640, height=640, caption="Gecko Soko")
 

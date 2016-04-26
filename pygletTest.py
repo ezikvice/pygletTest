@@ -9,7 +9,16 @@ __author__ = 'Dmitry'
 
 # TODO: сделать нормальный расчет координат. сейчас неправильно считаются
 
+
 # TODO: загружать поле из файла
+# TODO: для загрузки каждого класса свою функцию, например load_boxes(boxes_array)
+# или наоборот одну load_objects(boxes_array, boxes_class)
+# def load_level(filename):
+#     opencfg = configparser.ConfigParser()
+#     opencfg.read("levels/" + filename + ".ini")
+#     print(opencfg.get("GameObjects", 'trees'))
+#     print(opencfg.get("GameObjects", 'bricks'))
+
 # TODO: сделать загрузку из нескольких массивов на каждый объект свой массив
 arr = np.array([[3, 3, 3, 3, 3, 3, 3, 3, 2],
                 [3, 0, 0, 0, 0, 0, 0, 3, 2],
@@ -23,7 +32,6 @@ arr = np.array([[3, 3, 3, 3, 3, 3, 3, 3, 2],
 
 pyglet.resource.path = ["res"]
 pyglet.resource.reindex()
-
 
 # player = pyglet.sprite.Sprite(res.player, x=50, y=50)
 
@@ -70,9 +78,17 @@ label = pyglet.text.Label('[{0}, {1}]'.format(player.row, player.column),
                           x=410, y=10,
                           anchor_x='right', anchor_y='baseline')
 
+label2 = pyglet.text.Label('',
+                           font_name='Times New Roman',
+                           font_size=24,
+                           color=(255, 0, 0, 255),
+                           x=250, y=10,
+                           anchor_x='right', anchor_y='baseline')
+
 
 def show_coords():
     label.text = '[{0}, {1}]'.format(player.row, player.column)
+    label2.text = ''
 
 
 def can_move(obj, direction):
@@ -98,6 +114,19 @@ def can_move(obj, direction):
     return True
 
 
+# если во всех мишенях коробки, то возвращаем True и показываем, что уровень пройден
+# TODO: переход на следующий уровень и если уровней больше не осталось, то победа!
+def check_win():
+    count = 0
+    for target in box_targets:
+        for box in boxes:
+            if box.get_position() == target.get_position():
+                count += 1
+    if count == len(box_targets):
+        return True
+    return False
+
+
 def get_obj_by_coords(objects, r, c):
     for obj in objects:
         if obj.row == r and obj.column == c:
@@ -112,24 +141,32 @@ def on_key_press(symbol, modifiers):
             player.image = player.views['up']
             player.move(direction)
         show_coords()
+        if check_win():
+            label2.text = 'VICTORY!'
     if symbol == key.DOWN:  # координаты по y обращены для удобства
         direction = [1, 0]
         if can_move(player, direction):
             player.image = player.views['down']
             player.move(direction)
         show_coords()
+        if check_win():
+            label2.text = 'VICTORY!'
     if symbol == key.LEFT:
         direction = [0, -1]
         if can_move(player, direction):
             player.image = player.views['left']
             player.move(direction)
         show_coords()
+        if check_win():
+            label2.text = 'VICTORY!'
     if symbol == key.RIGHT:
         direction = [0, 1]
         if can_move(player, direction):
             player.image = player.views['right']
             player.move(direction)
         show_coords()
+        if check_win():
+            label2.text = 'VICTORY!'
     if symbol == key.M:
         player.music.pause()
     if symbol == key.P:
@@ -143,6 +180,7 @@ def on_draw():
     layer2.draw()
     player.draw()
     label.draw()
+    label2.draw()
     fps_display.draw()
 
 
