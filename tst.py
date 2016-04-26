@@ -3,6 +3,8 @@ import resources as res
 from pyglet import clock
 import configparser
 import numpy as np
+import GameObjects
+import ast
 
 __author__ = 'Dmitry'
 
@@ -63,7 +65,11 @@ save_file("test.ini")
 
 opencfg = configparser.ConfigParser()
 opencfg.read("levels/1.ini")
-print(opencfg.get("GameObjects", 'trees'))
+trees_list = ast.literal_eval(opencfg.get("GameObjects", 'trees'))
+batch = pyglet.graphics.Batch()
+trees = [GameObjects.Tree(batch, current_cell) for current_cell in trees_list]
+
+
 print(opencfg.get("GameObjects", 'bricks'))
 
 window = pyglet.window.Window(width=640, height=640, caption="Gecko Soko")
@@ -81,6 +87,7 @@ clock.schedule(update)
 def on_draw():
     window.clear()
     tree.draw()
+    batch.draw()
 
 
 pyglet.app.run()

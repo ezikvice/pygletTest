@@ -18,6 +18,10 @@ __author__ = 'Dmitry'
 #     opencfg.read("levels/" + filename + ".ini")
 #     print(opencfg.get("GameObjects", 'trees'))
 #     print(opencfg.get("GameObjects", 'bricks'))
+def load_trees(config, trees):
+    trees_list = config.get("GameObjects", 'trees')
+
+
 
 # TODO: сделать загрузку из нескольких массивов на каждый объект свой массив
 arr = np.array([[3, 3, 3, 3, 3, 3, 3, 3, 2],

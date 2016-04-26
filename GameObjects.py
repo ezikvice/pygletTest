@@ -37,7 +37,7 @@ class Player(GameObject):
         source = res.backmusic
         self.music.queue(source)
         self.music.volume = 0.3
-        self.music.play()
+        # self.music.play()
 
     music = media.Player()
     views = {'up': res.player, 'down': res.player_down, 'left': res.player_left, 'right': res.player_right}
