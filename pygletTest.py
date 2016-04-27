@@ -73,6 +73,8 @@ for row in range(len(arr)):
             player.move(current_cell)  # работает только потому, что изначально у игрока позиция 0,0
 
 window = pyglet.window.Window(width=(CELL_SIZE * 10), height=(CELL_SIZE * 10), caption="Gecko Soko")
+window.set_mouse_visible(True)
+
 fps_display = pyglet.window.FPSDisplay(window)
 fps_display.label.y = 0
 
@@ -138,8 +140,8 @@ def get_obj_by_coords(objects, r, c):
 
 
 @window.event
-def on_key_press(symbol, modifiers):
-    if symbol == key.UP:  # координаты по y обращены для удобства
+def on_text_motion(motion):
+    if motion == key.MOTION_UP:  # координаты по y обращены для удобства
         direction = [-1, 0]
         if can_move(player, direction):
             player.image = player.views['up']
@@ -147,7 +149,7 @@ def on_key_press(symbol, modifiers):
         show_coords()
         if check_win():
             label2.text = 'VICTORY!'
-    if symbol == key.DOWN:  # координаты по y обращены для удобства
+    if motion == key.MOTION_DOWN:  # координаты по y обращены для удобства
         direction = [1, 0]
         if can_move(player, direction):
             player.image = player.views['down']
@@ -155,7 +157,7 @@ def on_key_press(symbol, modifiers):
         show_coords()
         if check_win():
             label2.text = 'VICTORY!'
-    if symbol == key.LEFT:
+    if motion == key.MOTION_LEFT:
         direction = [0, -1]
         if can_move(player, direction):
             player.image = player.views['left']
@@ -163,7 +165,7 @@ def on_key_press(symbol, modifiers):
         show_coords()
         if check_win():
             label2.text = 'VICTORY!'
-    if symbol == key.RIGHT:
+    if motion == key.MOTION_RIGHT:
         direction = [0, 1]
         if can_move(player, direction):
             player.image = player.views['right']
@@ -171,6 +173,10 @@ def on_key_press(symbol, modifiers):
         show_coords()
         if check_win():
             label2.text = 'VICTORY!'
+
+
+@window.event
+def on_key_press(symbol, modifiers):
     if symbol == key.M:
         player.music.pause()
     if symbol == key.P:
