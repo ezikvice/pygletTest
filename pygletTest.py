@@ -181,6 +181,10 @@ def on_key_press(symbol, modifiers):
         player.music.pause()
     if symbol == key.P:
         player.music.play()
+    if symbol == key.PAGEUP:
+        player.music.volume += 0.05
+    if symbol == key.PAGEDOWN:
+        player.music.volume -= 0.05
 
 
 @window.event
