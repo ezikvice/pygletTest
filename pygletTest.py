@@ -198,7 +198,7 @@ def update(dt):
     pass
 
 
-pyglet.clock.set_fps_limit(60)
+# pyglet.clock.set_fps_limit(60)
 pyglet.clock.schedule_interval(update, 1 / 120)
 
 pyglet.app.run()

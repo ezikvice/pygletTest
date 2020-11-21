@@ -24,7 +24,8 @@ class GameObject(sprite.Sprite):
         row, column = next_cell
         self.column = column
         self.row = row
-        self.set_position(column * CELL_SIZE, WIN_HEIGHT - row * CELL_SIZE)
+        pos = (column * CELL_SIZE, WIN_HEIGHT - row * CELL_SIZE)
+        self.position = pos
 
     def get_position(self):
         # для удобства сначала строка, потом колонка
@@ -38,7 +39,7 @@ class Player(GameObject):
         source = res.backmusic
         self.music.queue(source)
         self.music.volume = 0.3
-        # self.music.play()
+        self.music.play()
 
     music = media.Player()
     views = {'up': res.player, 'down': res.player_down, 'left': res.player_left, 'right': res.player_right}
