@@ -1,6 +1,7 @@
 import pyglet
 import resources as res
 from pyglet import clock
+from pyglet.window import mouse
 import configparser
 import numpy as np
 import GameObjects
@@ -70,6 +71,11 @@ save_level("test.ini", ob)
 
 window = pyglet.window.Window(width=640, height=640, caption="Gecko Soko")
 
+label = pyglet.text.Label('',
+                          font_name='Times New Roman',
+                          font_size=36,
+                          x=410, y=10,
+                          anchor_x='right', anchor_y='baseline')
 
 def update(dt):
     # tree.rotation += 100*dt
@@ -84,6 +90,16 @@ def on_draw():
     window.clear()
     # tree.draw()
     batch.draw()
+    label.draw()
 
+
+@window.event
+def on_mouse_press(x, y, button, modifiers):
+    if button == mouse.LEFT:
+        label.text = 'left: {0}:{1}'.format(x, y)
+
+
+# event_logger = pyglet.window.event.WindowEventLogger()
+# window.push_handlers(event_logger)
 
 pyglet.app.run()

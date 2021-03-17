@@ -29,7 +29,7 @@ class GameObject(sprite.Sprite):
 
     def get_position(self):
         # для удобства сначала строка, потом колонка
-        return self.row,  self.column
+        return self.row, self.column
 
 
 class Player(GameObject):
@@ -37,8 +37,9 @@ class Player(GameObject):
         super(Player, self).__init__(res.player, 1, batch, arr)
 
         source = res.backmusic
-        self.music.queue(source)
         self.music.volume = 0.3
+        self.music.queue(source)
+        self.music.loop = True
         self.music.play()
 
     music = media.Player()
